@@ -66,6 +66,10 @@ impl Value<'_> {
             label: String::from(""),
         }
     }
+
+    fn label(&mut self, label: &str) {
+        self.label = String::from(label);
+    }
 }
 
 #[cfg(test)]
@@ -80,9 +84,11 @@ mod tests {
         let a = Value::new(nums.0, "a");
         let b = Value::new(nums.1, "b");
 
-        let sum = &a + &b;
+        let mut sum = &a + &b;
+        sum.label("sum");
 
         assert_eq!(sum, answer);
+        assert_eq!(sum.label, "sum");
         assert_eq!(sum._prev.0, Some(&a));
         assert_eq!(sum._prev.1, Some(&b));
         assert_eq!(sum._op, Some(Operation::Add));
@@ -97,9 +103,11 @@ mod tests {
         let a = Value::new(nums.0, "a");
         let b = Value::new(nums.1, "b");
 
-        let prod = &a * &b;
+        let mut prod = &a * &b;
+        prod.label("product");
 
         assert_eq!(prod, answer);
+        assert_eq!(prod.label, "product");
         assert_eq!(prod._prev.0, Some(&a));
         assert_eq!(prod._prev.1, Some(&b));
         assert_eq!(prod._op, Some(Operation::Mul));
