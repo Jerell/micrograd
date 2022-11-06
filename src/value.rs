@@ -80,7 +80,6 @@ impl Value<'_> {
             data: v,
             _prev: (Some(s), Some(o)),
             _op: Some(op),
-            label: String::from(""),
             ..Default::default()
         }
     }
