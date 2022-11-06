@@ -67,7 +67,7 @@ impl Value<'_> {
         }
     }
 
-    fn label(&mut self, label: &str) {
+    pub fn label(&mut self, label: &str) {
         self.label = String::from(label);
     }
 }
