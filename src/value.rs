@@ -16,6 +16,7 @@ pub struct Value<'a> {
 enum Operation {
     Add,
     Mul,
+    Tanh,
 }
 
 impl Default for Value<'_> {
@@ -34,7 +35,7 @@ impl fmt::Display for Value<'_> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Value( {} | data={} | grad={:.4})",
+            "Value( {} | data={:.4} | grad={:.4})",
             self.label, self.data, self.grad
         )
     }
@@ -92,6 +93,22 @@ impl Value<'_> {
 
     pub fn grad(&mut self, grad: f32) {
         self.grad = grad
+    }
+
+    pub fn tanh(&mut self) -> Value {
+        let n = self.data;
+        let t = ((2.0 * n).exp() - 1.0) / ((2.0 * n).exp() + 1.0);
+
+        let label = format!("tanh({})", self.label);
+
+        match self._prev {
+            (Some(a), Some(b)) => {
+                let mut v = Value::new_with_children(t, a, b, Operation::Tanh);
+                v.label(&label);
+                v
+            }
+            _ => Value::new(t, &label),
+        }
     }
 }
 
