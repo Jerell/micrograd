@@ -6,6 +6,7 @@ use std::{
 #[derive(Debug)]
 pub struct Value<'a> {
     data: f32,
+    grad: f32,
     _prev: (Option<&'a Value<'a>>, Option<&'a Value<'a>>),
     _op: Option<Operation>,
     label: String,
@@ -17,9 +18,25 @@ enum Operation {
     Mul,
 }
 
+impl Default for Value<'_> {
+    fn default() -> Self {
+        Value {
+            data: 0.0,
+            grad: 0.0,
+            _prev: (None, None),
+            _op: None,
+            label: String::from(""),
+        }
+    }
+}
+
 impl fmt::Display for Value<'_> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Value({} | data={})", self.label, self.data)
+        write!(
+            f,
+            "Value( {} | data={} | grad={:.4})",
+            self.label, self.data, self.grad
+        )
     }
 }
 
@@ -50,6 +67,7 @@ impl Value<'_> {
             _prev: (None, None),
             _op: None,
             label: String::from(label),
+            ..Default::default()
         }
     }
 
@@ -64,6 +82,7 @@ impl Value<'_> {
             _prev: (Some(s), Some(o)),
             _op: Some(op),
             label: String::from(""),
+            ..Default::default()
         }
     }
 
