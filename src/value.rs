@@ -65,8 +65,6 @@ impl Value<'_> {
     pub fn new(v: f32, label: &str) -> Value<'static> {
         Value {
             data: v,
-            _prev: (None, None),
-            _op: None,
             label: String::from(label),
             ..Default::default()
         }
