@@ -5,7 +5,7 @@ pub mod value;
 fn main() {
     {
         // backprop example
-        let x1 = Value::new(2.0, "x1");
+        let mut x1 = Value::new(2.0, "x1");
         let x2 = Value::new(0.0, "x2");
         let w1 = Value::new(-3.0, "w1");
         let w2 = Value::new(1.0, "w2");
@@ -22,8 +22,9 @@ fn main() {
         let mut n = &prodsum + &b;
         n.label("n");
 
-        let o = n.tanh();
+        let mut o = n.tanh();
+        o.grad(1.0);
 
-        println!("{o}")
+        println!("{o}");
     }
 }

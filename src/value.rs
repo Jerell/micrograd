@@ -101,14 +101,23 @@ impl Value<'_> {
 
         let label = format!("tanh({})", self.label);
 
+        let mut v = Value::new(t, &label);
+        v._op = Some(Operation::Tanh);
+
         match self._prev {
             (Some(a), Some(b)) => {
-                let mut v = Value::new_with_children(t, a, b, Operation::Tanh);
+                v = Value::new_with_children(t, a, b, Operation::Tanh);
                 v.label(&label);
-                v
             }
-            _ => Value::new(t, &label),
+            (Some(a), _) => {
+                v._prev.0 = Some(a);
+            }
+            (_, Some(b)) => {
+                v._prev.1 = Some(b);
+            }
+            _ => {}
         }
+        v
     }
 }
 
