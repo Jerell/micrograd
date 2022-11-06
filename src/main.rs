@@ -15,5 +15,7 @@ fn main() {
     let mut l = &d * &f;
     l.label("L");
 
+    l.grad(1.0);
+
     println!("{l}");
 }

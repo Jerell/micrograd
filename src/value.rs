@@ -89,6 +89,10 @@ impl Value<'_> {
     pub fn label(&mut self, label: &str) {
         self.label = String::from(label);
     }
+
+    pub fn grad(&mut self, grad: f32) {
+        self.grad = grad
+    }
 }
 
 #[cfg(test)]
