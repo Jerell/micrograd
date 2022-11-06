@@ -1,5 +1,8 @@
+use crate::value::Value;
+
 pub mod value;
 
 fn main() {
-    println!("Hello, world!");
+    let a = Value::new(1.0);
+    println!("Hello, world! {a}");
 }
